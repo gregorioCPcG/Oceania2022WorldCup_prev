@@ -1,4 +1,5 @@
-# criei o data frame todo nesse código, as fontes são muitas. Geralmente Wikipedia, para pib site do banco mundial,para ranking rugby site da federação interancional
+# criei o data frame todo nesse código, as fontes são muitas. 
+#Geralmente Wikipedia, para pib site do banco mundial,para ranking rugby site da federação interancional
 pais <- c("NZ","Solomon Islands", "New Caledonia","Tahiti","Fiji","Vanuatu","Papua New Guinea", "Tonga", "Cook Islands" )
 FIFA_NOV_2021 <- c(110, 141,153,159,161,163,164,199,205)
 dep <- c(9,8,7,6,5,4,3,2,1) # posicao com base no ranking da FIFA de Novembro de 2021
