@@ -1,11 +1,12 @@
+# criei o data frame todo nesse código, as fontes são muitas. Geralmente Wikipedia, para pib site do banco mundial,para ranking rugby site da federação interancional
 pais <- c("NZ","Solomon Islands", "New Caledonia","Tahiti","Fiji","Vanuatu","Papua New Guinea", "Tonga", "Cook Islands" )
 FIFA_NOV_2021 <- c(110, 141,153,159,161,163,164,199,205)
 dep <- c(9,8,7,6,5,4,3,2,1) # posicao com base no ranking da FIFA de Novembro de 2021
 pop <- c(5132160,652857,271407,189517,926276,307815, 8935000,100651,17459)
-rugbyranking <- c(88.75,23.81,0,0,76.62,15.45,33.68,67.76,45.11)
+rugbyranking <- c(88.75,23.81,0,0,76.62,15.45,33.68,67.76,45.11) # por que é o esporte mais praticado, pontos no ranking, nao apresentou relação.
 # 1= 9, 2 = 8, 3 =7, 4 = 6, 5=5, 6 =4, 7 =3, 8=2, 9=1
 #10 - 1/4/2/7/3/4/na/9/na
-hist10 <- c(9,6,8,3,7,6,0,1,0)
+hist10 <- c(9,6,8,3,7,6,0,1,0)#Papua Nova Guiné não disputou por problemas políticos, quando é zero ficou abaixo do nono
 #14 - 1/5/2/3/6/4/7/9/na
 hist14 <- c(9,5,8,7,4,6,3,1,0)
 #18 -  1/2/4/3/6//7/5/na/na
@@ -186,3 +187,5 @@ prev <- prev %>%
 prev %>%
   kbl(caption = "Previsão em 01/12/2021 Eliminatórias Oceania 2022") %>%
   kable_classic(full_width = F, html_font = "Garamond")# na imagem coloquei o título
+
+# não deu igual a 'dep', mas as fases dependeram do sorteio, o grupo A é muito mais forte que o grupo A.
