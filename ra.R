@@ -18,13 +18,9 @@ hist <- ((hist10*1)+(hist10*5)+(hist18*10))
 #9 pontos para primeiro, até 1 para nono colocado, menor que isso zero (maior peso para edição mais recente)
 
 league <- c("semi", "semi", "amaut","amaut", "semi", "amaut", "semi", "amaut", "amaut" )
-euro <- c(15,0,3,3,1,0,0,0,0)
+euro <- c(15,0,3,3,1,0,0,0,0) # numero de jogadores em clubes europeus na ultima convocação (na wikipedia)
 
 data <- data.frame(euro, FIFA_NOV_2021, hist, league,pais,rugbyranking, pop, pib_billion, dep)
-
-library(huxtable)
-
-
 
 mod1 <- lm(dep ~ hist, data = data)
 summary(mod1)
@@ -56,7 +52,7 @@ library(tidyverse)
 log_pop <- log(pop)
 log_pib <- log(pib_billion)
 
-base <- data.frame(euro, log_pop, log_pib, hist, dep)
+base <- data.frame(euro, log_pop, log_pib, hist, dep) # escolhi essas variáveis para testar
 
 modelbas<-bas.lm(dep ~.,data=base, prior="ZS-null", modelprior = uniform(), method = "MCMC")
 plot(modelbas, which=1, add.smooth=F)
@@ -76,7 +72,7 @@ summary(modelbas)
 
 data <- data.frame(euro, FIFA_NOV_2021, hist, league,pais,rugbyranking, pop, pib_billion, dep, log_pib, log_pop)
 
-mod <- lm(dep ~ log_pop+ hist, data = data )
+mod <- lm(dep ~ log_pop+ hist, data = data )# minha modelagem (R2) diz que esse é o melhor modelo
 summary(mod)
 
 #diagnósticos
@@ -88,10 +84,10 @@ ols_vif_tol(mod)
 
 # predict com base na pop e no ranking ####
 
-table(data$pais, data$log_pop)
-table(data$pais, data$hist)
+table(data$pais, data$log_pop)#só para conferir
+table(data$pais, data$hist)# só para conferir
 
-base <- data.frame(log_pop, hist, dep)
+base <- data.frame(log_pop, hist, dep)#para nova rodada
 
 modelbas<-bas.lm(dep ~.,data=base, prior="ZS-null", modelprior = uniform(), method = "MCMC")
 plot(modelbas, which=1, add.smooth=F)
@@ -110,8 +106,10 @@ image(modelbas, rotate = F)
 summary(modelbas)
 
 data2 <- data.frame(pais, log_pop, hist)
-head(data2)
+head(data2)#para visualir
 tail(data2)
+
+# predições ####
 
 NZ <- data.frame(log_pop = 15.45104, hist = 144)
 NZ = predict(modelbas, newdata = NZ, estimator = "BPM",  se.fit=T)
@@ -149,7 +147,7 @@ VAN = predict(modelbas, newdata = VAN, estimator = "BPM",  se.fit=T)
 VAN$fit  # fitted values
 VAN <- 4.59
 
-# PNG - não jogou 2010 (tudo quinto lugar)
+# PNG - não jogou 2010 (tudo quinto lugar, com base em histórico mais condizente)
 tail(data2)
 (5*1)+(5*5)+(5*10) #usar essa estimativa como PNG hist
 PNG <- data.frame(log_pop = 16.01, hist = 80)
@@ -168,19 +166,23 @@ head(data2)
 com <- c(NZ,SOL,CAL,TAI,FIJ,VAN,PNG,TON,COK)
 
 
-com <- data.frame(pais, com, log_pop, hist)
-prev <- c("winner", "runners´up", "semi", "semi", "group", "group", "group", "group","qualification")
-prev <- data.frame(pais, prev)
+com <- data.frame(pais, com, log_pop, hist)# daí eu conferi a ordem de com e fui nos grupos sorteados e fiz minha previsão
+
 rm(data2,mod,mod1,mod2,mod3,mod4,modelbas,CAL,COK,dep,euro,FIFA_NOV_2021,FIJ,hist,hist10,
    hist14,hist18,log_pib,log_pop,NZ,pais,pib_billion,PNG,pop,rugbyranking, SOL, TON, VAN,
-   TAI, league, com, data, base)
+   TAI, league, com, data, base)# removi para limpar
+
+prev <- c("winner", "runners´up", "semi", "semi", "group", "group", "group", "group","qualification")# aqui tá em inglês na imagem traduzi
+
+prev <- data.frame(pais, prev) # a base para fazer tabela preditiva
 
 
-library(knitr)
+
+library(knitr)# pacotes para tabela
 library(kableExtra)
 
 prev <- prev %>% 
   dplyr::select(pais, prev) 
 prev %>%
-  kbl(caption = "Previsão") %>%
-  kable_classic(full_width = F, html_font = "Garamond")
+  kbl(caption = "Previsão em 01/12/2021 Eliminatórias Oceania 2022") %>%
+  kable_classic(full_width = F, html_font = "Garamond")# na imagem coloquei o título
