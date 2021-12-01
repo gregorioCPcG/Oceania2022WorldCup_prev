@@ -168,11 +168,11 @@ head(data2)
 com <- c(NZ,SOL,CAL,TAI,FIJ,VAN,PNG,TON,COK)
 
 
-com <- data.frame(pais, com, log_pop, hist)# daí eu conferi a ordem de com e fui nos grupos sorteados e fiz minha previsão
+com2 <- data.frame(pais, com, log_pop, hist)# daí eu conferi a ordem de com e fui nos grupos sorteados e fiz minha previsão
 
 rm(data2,mod,mod1,mod2,mod3,mod4,modelbas,CAL,COK,dep,euro,FIFA_NOV_2021,FIJ,hist,hist10,
    hist14,hist18,log_pib,log_pop,NZ,pais,pib_billion,PNG,pop,rugbyranking, SOL, TON, VAN,
-   TAI, league, com, data, base)# removi para limpar
+   TAI, league, com2, data, base)# removi para limpar
 
 prev <- c("winner", "runners´up", "semi", "semi", "group", "group", "group", "group","qualification")# aqui tá em inglês na imagem traduzi
 
