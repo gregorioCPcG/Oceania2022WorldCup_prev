@@ -1,0 +1,277 @@
+# varias tentativas feitas para testar probabilidades
+
+pais <- c('NZ','SOL','CAL','TAI','FIJ','VAN','PNG','TON','COK')
+prob <- (com)*10
+rm(prev)
+prob
+a1 <- prob + 10
+prev <- c(5000, 50,40,40,20,20,20,0,0)#enfaase maior por NZ sempre vencer, tonga zero por nunca passar fase de grupos
+a1 <- a1 + prev
+a1
+a2 <- 6000- a1
+a2
+prev <- data.frame(pais, a1, a2)
+#NZ
+head(prev)
+a1 <- 5097
+a2 <- 903
+n <- 1
+s <- 1
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+NZ <-mean(posteriori1)
+NZ
+#SOL
+head(prev)
+a1 <- 133.3094
+a2 <- 5866.6906 
+n <- 1
+s <- 1
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+SOL <-mean(posteriori1)
+SOL
+#TON
+tail(prev)
+a1 <- 30
+a2 <- 5970 
+n <- 1
+s <- 1
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+TON <-mean(posteriori1)
+TON
+#COOK
+tail(prev)
+a1 <- 20
+a2 <- 5980 
+n <- 1
+s <- 1
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+COK <-mean(posteriori1)
+COK
+#PNG
+tail(prev)
+a1 <- 83.6
+a2 <- 5916.4 
+n <- 1
+s <- 1
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+PNG <-mean(posteriori1)
+PNG
+
+#VAN
+tail(prev)
+a1 <- 75.9
+a2 <- 5924.1 
+n <- 1
+s <- 1
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+VAN <-mean(posteriori1)
+VAN
+
+#FIJ
+tail(prev)
+a1 <- 84.7
+a2 <- 5915.3 
+n <- 1
+s <- 1
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+FIJ <-mean(posteriori1)
+FIJ
+
+#TAI
+tail(prev)
+a1 <- 108
+a2 <- 5892 
+n <- 1
+s <- 1
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+TAI <-mean(posteriori1)
+
+
+#CAL
+head(prev)
+a1 <- 118.9
+a2 <- 5881.1
+n <- 1
+s <- 1
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+CAL <-mean(posteriori1)
+
+
+#pais <- c('NZ','SOL','CAL','TAI','FIJ','VAN','PNG','TON','COK')
+chance <-c(NZ,SOL,CAL,TAI,FIJ,VAN,PNG,TON,COK)
+
+options("scipen"=100, "digits"=2)
+chance <- chance*100
+prev <- data.frame(pais, chance)
+prev <- prev %>% 
+  dplyr::select(pais, chance) 
+prev %>%
+  kbl(caption = "Previsão em 01/12/2021 classificação aos Playoffs 2022") %>%
+  kable_classic(full_width = F, html_font = "Garamond")
+
+
+# nova chance #####
+prev$chance
+sd(prev$chance)
+prev$pais
+NZ <- rnorm(n=1000, mean=84.95, sd=28)
+SOL <-rnorm(n=1000, mean=2.24, sd=28)
+PNG <-rnorm(n=1000, mean=2, sd=28)# pegou o valor da N.Caledônia
+TAI <- rnorm(n=1000, mean=1.82, sd=28)
+hist(TAI)
+max(TAI)
+hist(NZ)
+min(NZ)
+mean(NZ)
+mean(TAI)
+mean(SOL)
+mean(PNG)
+cor(TAI, PNG)
+cor(NZ,TAI)
+
+# regra tres
+n<-84.95+2.24+2+1.82#91 é 100
+NZ1 <- 84.95
+SOL1 <- 2.24
+PNG1 <- 2#ATUALIZADO
+TAI1 <- 1.82
+NZ2 <- (NZ1*100)/n
+SOL2 <- (SOL1*100)/n
+PNG2 <-(PNG1*100)/n
+TAI2 <- (TAI1*100)/n
+NZ2
+t <- c(NZ2,SOL2,PNG2,TAI2)
+table(t)
+1.99978024392924 + 2.19756070761455 + 2.46126799252829 + 93.3413910559279
+
+NZ <- rnorm(n=10000, mean=93, sd=1)
+SOL <-rnorm(n=1000, mean=SOL2, sd=0.01)
+PNG <-rnorm(n=1000, mean=PNG2, sd=0.01)# pegou o valor da N.Caledônia
+TAI <- rnorm(n=1000, mean=TAI2, sd=0.01)
+
+mean(TAI)
+mean(NZ)
+
+NZ <- NZ
+hist(NZ)
+summary(NZ)
+TAI <-rbeta(10000, mean(TAI), TAI2)
+summary(TAI)
+hist(TAI)
+SOL <- rbeta(10000, mean(SOL), SOL2)
+hist(SOL)
+summary(SOL)
+
+PNG <-rbeta(10000, mean(PNG), PNG2)
+summary(PNG)
+hist(PNG)
+
+vencer <- data.frame(PNG,SOL,NZ,TAI)
+vencer$chance <- NZ - (PNG+SOL+TAI)
+summary(vencer$chance)
+hist(vencer$chance)
+cor(vencer$chance, vencer$PNG)
+cor(vencer$chance, vencer$TAI)
+cor(vencer$chance, vencer$SOL)
+cor(vencer$chance, vencer$NZ)
+plot(vencer$chance, vencer$PNG)
+plot(vencer$chance, vencer$TAI)
+plot(vencer$chance, vencer$SOL)
+vencer$outro <- PNG+TAI+SOL
+plot(vencer$chance, vencer$outro)
+cor(vencer$chance, vencer$outro)
+cor.test(vencer$chance, vencer$outro)
+cor.test(vencer$chance, vencer$PNG)
+cor.test(vencer$chance, vencer$SOL)
+cor.test(vencer$chance, vencer$TAI)
+cor.test(vencer$chance, vencer$NZ)
+plot(vencer$chance, vencer$NZ)
+lm1 <- lm(chance ~ outro, data=vencer)
+summary(lm1)
+lm1 <- lm(chance ~ NZ, data=vencer)
+summary(lm1)
+lm1 <- lm(chance ~ PNG, data=vencer)
+summary(lm1)
+lm1 <- lm(chance ~ TAI, data=vencer)
+summary(lm1)
+lm1 <- lm(chance ~ SOL, data=vencer)
+summary(lm1)
+
+
+
+# novas probablidades - fonte:  https://twitter.com/We_Global/status/1507212295264518147/photo/1
+a <- 40.08+1.1+0.18+0.17
+NZ <- (40.08*100)/a
+rmPNG <- (1.1*100)/a
+SOL <- (0.18*100)/a
+TAI <- (0.17*100)/a
+
+
+set.seed(2) #conforme orientações do curso ibpad
+a1 <- 1
+a2 <- 1
+n <- 100
+s <- NZ
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+NZ1 <-mean(posteriori1)
+NovaZelandia <- posteriori1*100
+hist(NovaZelandia)
+summary(NovaZelandia)
+
+
+a1 <- 1
+a2 <- 1
+n <- 100
+s <- PNG
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+PN1 <-mean(posteriori1)
+PapuaNovaGuine <- posteriori1*100
+hist(PapuaNovaGuine)
+summary(PapuaNovaGuine)
+
+
+
+a1 <- 1
+a2 <- 1
+n <- 100
+s <- SOL
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+IlhasSalomao <- posteriori1*100
+hist(IlhasSalomao)
+summary(IlhasSalomao)
+
+
+a1 <- 1
+a2 <- 1
+n <- 100
+s <- TAI
+w <- a1+s
+z <- a2+(n-s)
+posteriori1 <- rbeta(10000, w, z)
+TAITI <- posteriori1*100
+hist(TAITI)
+summary(TAITI)
