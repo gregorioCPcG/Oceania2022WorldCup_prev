@@ -275,3 +275,9 @@ posteriori1 <- rbeta(10000, w, z)
 TAITI <- posteriori1*100
 hist(TAITI)
 summary(TAITI)
+
+
+lm1 <- lm(chance ~ outro, data=vencer)
+summary(lm1)
+library(coefplot)
+coefplot(lm1, intercept=FALSE, interactive=TRUE)# a chance de outro
